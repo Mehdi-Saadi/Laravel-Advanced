@@ -82,6 +82,7 @@
             @yield('content')
         </main>
     </div>
+    @yield('recaptcha')
     @include('sweetalert::alert')
 </body>
 </html>
