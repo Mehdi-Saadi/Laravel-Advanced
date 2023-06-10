@@ -1,7 +1,7 @@
 @extends('profile.layout')
 
 @section('main')
-    <h4>Two Fator Auth:</h4>
+    <h4>Two Factor Auth:</h4>
     <hr>
 
     @if($errors->any())

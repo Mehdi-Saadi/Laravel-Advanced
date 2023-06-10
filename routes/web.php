@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthTokenController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
@@ -23,6 +24,8 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 Route::get('/auth/google', [GoogleAuthController::class, 'redirect'])->name('auth.google');
 Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback']);
+Route::get('/auth/token', [AuthTokenController::class, 'getToken'])->name('2fa.token');
+Route::post('/auth/token', [AuthTokenController::class, 'postToken']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
