@@ -3,8 +3,10 @@
 use App\Http\Controllers\Auth\AuthTokenController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\GoogleAuthController;
+use App\Http\Controllers\Profile\IndexController;
+use App\Http\Controllers\Profile\TwoFactorAuthController;
+use App\Http\Controllers\Profile\TokenAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +20,8 @@ use App\Http\Controllers\Auth\GoogleAuthController;
 */
 
 Route::get('/', function () {
+//    $user = \App\Models\User::find(1);
+//    $user->notify(new \App\Notifications\LoginToWebsite());
     return view('welcome');
 });
 
@@ -29,11 +33,14 @@ Route::post('/auth/token', [AuthTokenController::class, 'postToken']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::middleware('auth')->group(function () {
-    Route::get('profile', [ProfileController::class, 'index'])->name('profile');
-    Route::get('profile/twofactor', [ProfileController::class, 'manageTowFactor'])->name('profile.2fa.manage');
-    Route::post('profile/twofactor', [ProfileController::class, 'postManageTowFactor']);
+Route::prefix('profile')->middleware('auth')->group(function () {
+    Route::get('/', [IndexController::class, 'index'])->name('profile');
 
-    Route::get('profile/twofactor/phone', [ProfileController::class, 'getPhoneVerify'])->name('profile.2fa.phone');
-    Route::post('profile/twofactor/phone', [ProfileController::class, 'postPhoneVerify']);
+    Route::prefix('twofactor')->group(function () {
+        Route::get('/', [TwoFactorAuthController::class, 'manageTowFactor'])->name('profile.2fa.manage');
+        Route::post('/', [TwoFactorAuthController::class, 'postManageTowFactor']);
+
+        Route::get('/phone', [TokenAuthController::class, 'getPhoneVerify'])->name('profile.2fa.phone');
+        Route::post('/phone', [TokenAuthController::class, 'postPhoneVerify']);
+    });
 });
