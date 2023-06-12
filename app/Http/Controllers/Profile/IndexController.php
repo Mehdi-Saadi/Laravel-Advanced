@@ -11,6 +11,4 @@ class IndexController extends Controller
     {
         return view('profile.index');
     }
-
-
 }

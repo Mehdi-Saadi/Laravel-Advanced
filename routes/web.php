@@ -20,8 +20,12 @@ use App\Http\Controllers\Profile\TokenAuthController;
 */
 
 Route::get('/', function () {
-//    $user = \App\Models\User::find(1);
-//    $user->notify(new \App\Notifications\LoginToWebsite());
+//    dd(app('fooService')->doSomething());
+
+//    dd(\Illuminate\Support\Facades\File::get(public_path('robots.txt')));
+
+    dd(\App\Services\Foo::doSomething());
+
     return view('welcome');
 });
 
