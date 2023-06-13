@@ -3,38 +3,32 @@
 namespace App\Rules;
 
 use Closure;
-use GuzzleHttp\Client;
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Translation\PotentiallyTranslatedString;
 
 class Recaptcha implements ValidationRule
 {
     /**
      * Run the validation rule.
      *
-     * @param  \Closure(string): \Illuminate\Translation\PotentiallyTranslatedString  $fail
+     * @param string $attribute
+     * @param mixed $value
+     * @param Closure(string): PotentiallyTranslatedString $fail
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        try {
-            $client = new Client();
-            $response = $client->request('post', 'https://www.google.com/recaptcha/api/siteverify', [
-                'form_params' => [
-                    'secret' => env('GOOGLE_RECAPTCHA_SECRET_KEY'),
-                    'response' => $value,
-                    'remoteip' => request()->ip()
-                ]
-            ]);
+        $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+            'secret' => env('GOOGLE_RECAPTCHA_SECRET_KEY'),
+            'response' => $value,
+            'remoteip' => request()->ip()
+        ]);
 
-            $response = json_decode($response->getBody());
+        $response = $response->json();
 
-            echo $response->success;
-        } catch (\Exception $exception) {
-            // todo log an error
-            echo $exception;
-        }
-
-        if (!$response->success) {
+        if (!$response['success']) {
             $fail('شما به عنوان ربات شناخته شدید');
         }
+        echo $response['success'];
     }
 }
