@@ -5,10 +5,17 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
+
+//    public function __construct()
+//    {
+//        $this->middleware('can:edit-user,user')->only(['edit']);
+//    }
+
     /**
      * Display a listing of the resource.
      */
@@ -71,7 +78,24 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+//        if (Gate::denies('edit', $user)) {
+//            abort(403);
+//        }
+
+
+//        $this->authorize('edit', $user);
+
+
+//        if (auth()->user()->can('edit', $user)) {
+//            return view('admin.users.edit', compact('user'));
+//        }
+//
+//        abort(403);
+
+        $this->authorize('edit', $user);
+
         return view('admin.users.edit', compact('user'));
+
     }
 
     /**
