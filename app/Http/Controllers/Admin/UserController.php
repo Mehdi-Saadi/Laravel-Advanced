@@ -5,15 +5,19 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
 
-//    public function __construct()
-//    {
-//        $this->middleware('can:edit-user,user')->only(['edit']);
-//    }
+    public function __construct()
+    {
+        $this->middleware('can:show-users')->only(['index']);
+        $this->middleware('can:create-user')->only(['create', 'store']);
+        $this->middleware('can:edit-user')->only(['edit', 'update']);
+        $this->middleware('can:delete-user')->only(['destroy']);
+    }
 
     /**
      * Display a listing of the resource.
@@ -27,7 +31,16 @@ class UserController extends Controller
         }
 
         if (\request('admin')) {
+            $this->authorize('show-staff-users');
             $users->where('is_superuser', 1)->orWhere('is_staff', 1);
+        }
+
+        if(Gate::allows('show-staff-users')) {
+            if (\request('admin')) {
+                $users->where('is_superuser', 1)->orWhere('is_staff', 1);
+            }
+        } else {
+            $users->where('is_superuser', 0)->orWhere('is_staff', 0);
         }
 
         $users = $users->latest()->paginate(3);
@@ -90,8 +103,6 @@ class UserController extends Controller
 //        }
 //
 //        abort(403);
-
-        $this->authorize('edit', $user);
 
         return view('admin.users.edit', compact('user'));
 

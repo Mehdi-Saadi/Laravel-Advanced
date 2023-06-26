@@ -20,10 +20,7 @@ use App\Http\Controllers\Profile\TokenAuthController;
 */
 
 Route::get('/', function () {
-    if (\Illuminate\Support\Facades\Gate::allows('edit-user')) {
-        return view('welcome');
-    }
-    return 'access denied';
+    return view('welcome');
 });
 
 Auth::routes(['verify' => true]);
