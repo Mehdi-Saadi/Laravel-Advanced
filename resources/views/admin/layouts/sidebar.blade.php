@@ -45,10 +45,30 @@
                                     <p>لیست کاربران</p>
                                 </a>
                             </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item has-treeview {{ isActive(['admin.permissions.index', 'admin.roles.index'], 'menu-open') }}">
+                        <a href="#" class="nav-link {{ isActive(['admin.permissions.index', 'admin.roles.index']) }}">
+                            <i class="nav-icon fa fa-users"></i>
+                            <p>
+                                بخش اجازه دسترسی
+                                <i class="right fa fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="./index2.html" class="nav-link">
+                                <a href="{{ route('admin.roles.index') }}" class="nav-link {{ isActive('admin.roles.index') }}">
                                     <i class="fa fa-circle-o nav-icon"></i>
-                                    <p>اجازه دسترسی</p>
+                                    <p>همه مقام ها</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.permissions.index') }}" class="nav-link {{ isActive('admin.permissions.index') }}">
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p>همه دسترسی ها</p>
                                 </a>
                             </li>
                         </ul>

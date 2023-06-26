@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
@@ -31,7 +30,7 @@ class UserController extends Controller
             $users->where('is_superuser', 1)->orWhere('is_staff', 1);
         }
 
-        $users = $users->latest()->paginate(20);
+        $users = $users->latest()->paginate(3);
 
         return view('admin.users.all', compact('users'));
     }

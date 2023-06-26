@@ -19,7 +19,6 @@ class AdminAuthenticated
     {
         if($request->user()->isSuperUser() || $request->user()->isStaffUser()) {
             return $next($request);
-
         }
 
         return redirect('/');
