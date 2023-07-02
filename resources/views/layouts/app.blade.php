@@ -11,6 +11,7 @@
 
     <!-- Fonts -->
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <link href="/bootstrap-rtl.min.css" rel="stylesheet" type="text/css" />
 
     <style>
         body {
@@ -18,7 +19,10 @@
         }
     </style>
 
+    @yield('style')
+
     <!-- Scripts -->
+    <script src="/plugins/jquery/jquery.min.js"></script>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
@@ -32,14 +36,10 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-
-                    </ul>
+                <div class="collapse navbar-collapse d-flex justify-content-md-end" id="navbarSupportedContent">
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
+                    <ul class="navbar-nav mr-auto">
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
@@ -84,5 +84,6 @@
     </div>
     @yield('recaptcha')
     @include('sweetalert::alert')
+    @yield('script')
 </body>
 </html>

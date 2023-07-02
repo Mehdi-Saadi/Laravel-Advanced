@@ -6,6 +6,7 @@ use App\Notifications\ResetPassword as ResetPasswordNotification;
 use App\Notifications\VerifyEmail as VerifyEmailNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -118,5 +119,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function hasPermission($permission)
     {
         return $this->permissions->contains('name', $permission->name) || $this->hasRole($permission->roles);
+    }
+
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }

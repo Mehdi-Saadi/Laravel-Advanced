@@ -4,7 +4,6 @@ use App\Http\Controllers\Admin\User\PermissionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    auth()->loginUsingId(5);
     return view('admin.index');
 });
 
@@ -13,3 +12,4 @@ Route::get('/users/{user}/permissions', [PermissionController::class, 'create'])
 Route::post('/users/{user}/permissions', [PermissionController::class, 'store'])->name('users.permissions.store')->middleware('can:staff-user-permissions');
 Route::resource('permissions', 'App\Http\Controllers\Admin\PermissionController');
 Route::resource('roles', 'App\Http\Controllers\Admin\RoleController');
+Route::resource('products', 'App\Http\Controllers\Admin\ProductController')->except('show');
