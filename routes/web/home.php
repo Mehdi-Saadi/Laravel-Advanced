@@ -22,8 +22,9 @@ use App\Http\Controllers\Profile\TokenAuthController;
 */
 
 Route::get('/', function () {
-    $comment = \App\Models\Comment::find(3);
-    return $comment->commentable;
+    \auth()->loginUsingId(11);
+//    return \Carbon\Carbon::now()->subDays(2);
+//    return \Morilog\Jalali\Jalalian::now();
 });
 
 Auth::routes(['verify' => true]);

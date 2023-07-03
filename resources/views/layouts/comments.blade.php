@@ -1,9 +1,9 @@
 @foreach($comments as $comment)
     <div class="card mt-4">
         <div class="card-header d-flex justify-content-between">
-            <div>
+            <div class="d-flex">
                 <span>{{ $comment->user->name }}</span>
-                <span class="text-muted">- دو دقیقه قبل</span>
+                <span class="text-muted"> - {{ jdate($comment->created_at)->ago() }}</span>
             </div>
             @auth
                 @if($comment->parent_id == 0)
