@@ -42,9 +42,11 @@ class ProductController extends Controller
             'description' => 'required',
             'price' => 'required',
             'inventory' => 'required',
+            'categories' => 'required',
         ]);
 
-        auth()->user()->products()->create($data);
+        $product = auth()->user()->products()->create($data);
+        $product->categories()->sync($data['categories']);
 
         alert('', 'محصول مورد نظر با موفقیت ثبت شد', 'success');
         return to_route('admin.products.index');
@@ -68,9 +70,11 @@ class ProductController extends Controller
             'description' => 'required',
             'price' => 'required',
             'inventory' => 'required',
+            'categories' => 'required',
         ]);
 
         $product->update($data);
+        $product->categories()->sync($data['categories']);
 
         alert('', 'محصول مورد نظر با موفقیت ویرایش شد', 'success');
         return to_route('admin.products.index');

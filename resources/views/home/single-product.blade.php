@@ -51,6 +51,12 @@
                     </div>
 
                     <div class="card-body">
+                        @foreach($product->categories as $category)
+                            <a href="#">{{ $category->name }}</a>
+                        @endforeach
+
+                        <br>
+
                         {{ $product->description }}
                     </div>
                 </div>
