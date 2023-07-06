@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AttributeController;
 use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\User\PermissionController;
 use Illuminate\Support\Facades\Route;
@@ -14,6 +15,7 @@ Route::post('/users/{user}/permissions', [PermissionController::class, 'store'])
 Route::resource('permissions', 'App\Http\Controllers\Admin\PermissionController');
 Route::resource('roles', 'App\Http\Controllers\Admin\RoleController');
 Route::resource('products', 'App\Http\Controllers\Admin\ProductController')->except('show');
+Route::post('attribute/values', [AttributeController::class, 'getValues']);
 
 Route::get('comments/unapproved', [CommentController::class, 'unapproved'])->name('comments.unapproved');
 Route::resource('comments', 'App\Http\Controllers\Admin\CommentController')->only(['index', 'update', 'destroy']);
